@@ -1,4 +1,4 @@
-    export const navigationConfig = {
+export const navigationConfig = {
       mainNav: [
         {
           title: "Resources",

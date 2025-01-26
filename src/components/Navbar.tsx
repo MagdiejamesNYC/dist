@@ -1,4 +1,4 @@
-    import { Glasses, Menu, X } from 'lucide-react';
+import { Glasses, Menu, X } from 'lucide-react';
     import { useState } from 'react';
     import { Link } from 'react-router-dom';
     import Newsletter from './Newsletter';
