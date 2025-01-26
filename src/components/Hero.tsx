@@ -45,7 +45,7 @@ import { useState } from 'react';
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
-                  to="/dist/resources"
+                  to="/resources"
                   className="px-8 py-4 bg-cyan-500 hover:bg-cyan-600 text-white rounded-lg font-semibold transition-all transform hover:scale-105"
                 >
                   Explore Resources
