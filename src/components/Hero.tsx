@@ -5,9 +5,12 @@ import { useState } from 'react';
     import Newsletter from './Newsletter';
     import ComingSoonBadge from './ComingSoonBadge';
     import { Link } from 'react-router-dom';
+    import { siteConfig } from '../config';
 
     export default function Hero() {
       const [showNewsletter, setShowNewsletter] = useState(false);
+      const basePath = siteConfig.url.startsWith('http') ? new URL(siteConfig.url).pathname : siteConfig.url;
+      const normalizedBasePath = basePath.endsWith('/') ? basePath : `${basePath}/`;
 
       const footerItems = [
         {
@@ -45,7 +48,7 @@ import { useState } from 'react';
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
-                  to="/resources"
+                  to={`${normalizedBasePath}resources`}
                   className="px-8 py-4 bg-cyan-500 hover:bg-cyan-600 text-white rounded-lg font-semibold transition-all transform hover:scale-105"
                 >
                   Explore Resources

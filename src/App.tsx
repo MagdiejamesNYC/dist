@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Layout from './components/Layout';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -11,13 +11,18 @@ import ProfessionalDevelopment from './pages/ProfessionalDevelopment';
 import Unsubscribe from './pages/Unsubscribe';
 import JobBoard from './pages/JobBoard';
 import WeCanHelpYou from './pages/WeCanHelpYou';
-import { siteConfig } from './config';
+import { useEffect } from 'react';
 
 function App() {
-  const basePath = siteConfig.url.startsWith('http') ? new URL(siteConfig.url).pathname : siteConfig.url;
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname === '/') {
+      window.scrollTo(0, 0);
+    }
+  }, [location]);
 
   return (
-    <Router basename={basePath}>
       <Layout>
         <Navbar />
         <Routes>
@@ -33,7 +38,6 @@ function App() {
           <Route path="/we-can-help-you" element={<WeCanHelpYou />} />
         </Routes>
       </Layout>
-    </Router>
   );
 }
 
