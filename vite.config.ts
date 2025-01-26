@@ -20,8 +20,6 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         input: {
           main: path.resolve(__dirname, 'index.html'),
-          commands: path.resolve(__dirname, 'commands.html'),
-          contact: path.resolve(__dirname, 'contact.html'),
         },
       },
     },
