@@ -11,10 +11,13 @@ import ProfessionalDevelopment from './pages/ProfessionalDevelopment';
 import Unsubscribe from './pages/Unsubscribe';
 import JobBoard from './pages/JobBoard';
 import WeCanHelpYou from './pages/WeCanHelpYou';
+import { siteConfig } from './config';
 
 function App() {
+  const basePath = siteConfig.url.startsWith('http') ? new URL(siteConfig.url).pathname : siteConfig.url;
+
   return (
-    <Router>
+    <Router basename={basePath}>
       <Layout>
         <Navbar />
         <Routes>
