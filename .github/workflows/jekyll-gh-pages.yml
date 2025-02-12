@@ -3,8 +3,8 @@ name: Deploy Site with GitHub Pages
 
 on:
   # Runs on pushes targeting the default branch
-  #push:
-  #  branches: ["main"]
+  # push:
+  #   branches: ["main"]
   
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -33,11 +33,22 @@ jobs:
         with:
           node-version: 22 # Use the Node.js version required for your project
 
-      # Install dependencies and build the project
-      - name: Install dependencies and build
-        run: |
-          npm install
-          npm run build
+      # Clean cache and remove potential corrupted dependencies
+      - name: Clean npm cache
+        run: npm cache clean --force
+
+      # Remove node_modules and package-lock.json before installing dependencies
+      - name: Remove existing dependencies
+        run: rm -rf node_modules package-lock.json
+
+      # Install dependencies with a clean slate
+      - name: Install dependencies
+        run: npm ci
+
+      # Build the project
+      - name: Build project
+        run: npm run build
+
       # Upload the dist folder as an artifact
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
@@ -57,5 +68,4 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
         with:
-          # Add the base path here
           base_path: /dist/
