@@ -1,5 +1,8 @@
 import { X } from 'lucide-react';
 import { useState } from 'react';
+import { toast, Toaster } from 'react-hot-toast';
+import { db } from '../lib/firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 interface ContactFormProps {
   isOpen: boolean;
@@ -10,18 +13,38 @@ export default function ContactForm({ isOpen, onClose }: ContactFormProps) {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle contact form submission
-    console.log('Contact:', { email, phone, message });
-    onClose();
+    setLoading(true);
+
+    try {
+      await addDoc(collection(db, 'pro_emails'), {
+        email,
+        phone,
+        description: message,
+        submittedAt: serverTimestamp(),
+      });
+      
+      toast.success('Message sent successfully!');
+      setEmail('');
+      setPhone('');
+      setMessage('');
+      onClose();
+    } catch (error) {
+      toast.error('Failed to send message. Please try again.');
+      console.error('Contact form submission error:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <Toaster position="top-center" />
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
       <div className="relative bg-gradient-to-br from-gray-900 to-black border border-white/10 rounded-2xl p-8 max-w-md w-full">
         <button
@@ -32,24 +55,10 @@ export default function ContactForm({ isOpen, onClose }: ContactFormProps) {
         </button>
         
         <div className="text-center mb-6">
-          <h3 className="text-2xl font-bold text-white mb-2">Advertise in the Metaverse</h3>
+          <h3 className="text-2xl font-bold text-white mb-2">Get in Touch</h3>
           <p className="text-gray-300">
-            Reach over 3,000 XR professionals, educators, and decision-makers in the educational technology space.
+            Reach out to us with your inquiries, and we'll get back to you shortly.
           </p>
-        </div>
-
-        <div className="space-y-4 mb-6">
-          {[
-            "Target audience of XR/AR/VR enthusiasts",
-            "High-engagement educational community",
-            "Premium ad placements available",
-            "Custom sponsorship opportunities"
-          ].map((benefit, index) => (
-            <div key={index} className="flex items-center text-gray-300">
-              <div className="h-2 w-2 bg-cyan-400 rounded-full mr-3" />
-              {benefit}
-            </div>
-          ))}
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -72,16 +81,17 @@ export default function ContactForm({ isOpen, onClose }: ContactFormProps) {
           <textarea
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            placeholder="Tell us about your advertising goals"
+            placeholder="Your message"
             rows={4}
             className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-400 resize-none"
             required
           />
           <button
             type="submit"
-            className="w-full px-4 py-3 bg-cyan-500 hover:bg-cyan-600 text-white rounded-lg font-semibold transition-colors"
+            disabled={loading}
+            className="w-full px-4 py-3 bg-cyan-500 hover:bg-cyan-600 disabled:bg-cyan-500/50 disabled:cursor-not-allowed text-white rounded-lg font-semibold transition-colors"
           >
-            Get in Touch
+            {loading ? 'Sending...' : 'Submit Message'}
           </button>
         </form>
       </div>

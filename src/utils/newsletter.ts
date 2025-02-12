@@ -28,7 +28,7 @@ export const subscribeToNewsletter = async (email: string): Promise<DocumentRefe
   // Check if already subscribed
   const q = query(collection(db, COLLECTION_NAME), where("email", "==", email));
   const querySnapshot = await getDocs(q);
-  
+  console.log(q)
   if (!querySnapshot.empty) {
     throw new Error('Email already subscribed');
   }
@@ -41,8 +41,8 @@ export const subscribeToNewsletter = async (email: string): Promise<DocumentRefe
   };
 
   // Send welcome email using Firebase Cloud Function
-  const sendWelcomeEmail = httpsCallable(functions, 'sendWelcomeEmail');
-  await sendWelcomeEmail({ email, unsubscribeToken: subscriber.unsubscribeToken });
+  // const sendWelcomeEmail = httpsCallable(functions, 'sendWelcomeEmail');
+  // await sendWelcomeEmail({ email, unsubscribeToken: subscriber.unsubscribeToken });
 
   return addDoc(collection(db, COLLECTION_NAME), subscriber);
 };

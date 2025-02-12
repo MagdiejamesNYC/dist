@@ -30,9 +30,9 @@ export const subscribeToNewsletter = async (email: string): Promise<DocumentRefe
     subscribeDate: serverTimestamp(),
     unsubscribeToken: generateToken(),
   };
-
-  const sendWelcomeEmail = httpsCallable(functions, 'sendWelcomeEmail');
-  await sendWelcomeEmail({ email, unsubscribeToken: subscriber.unsubscribeToken });
+ console.log("test test test")
+  // const sendWelcomeEmail = httpsCallable(functions, 'sendWelcomeEmail');
+  // await sendWelcomeEmail({ email, unsubscribeToken: subscriber.unsubscribeToken });
 
   return addDoc(collection(db, COLLECTION_NAME), subscriber);
 };

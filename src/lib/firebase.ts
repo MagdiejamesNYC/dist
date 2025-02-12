@@ -4,13 +4,18 @@ import { getAuth } from 'firebase/auth';
 import { getFunctions } from 'firebase/functions';
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyCfqqCSy_NHMbBQ-OQfFS7xwFkHh8QKqM4",
+  authDomain: "vrar-a6aa2.firebaseapp.com",
+  projectId: "vrar-a6aa2",
+  storageBucket: "vrar-a6aa2.firebasestorage.app",
+  messagingSenderId: "403824668186",
+  appId: "1:403824668186:web:3fa8018e02fef0e39aeba3",
+  measurementId: "G-GFHHVLJ3QK"
 };
+
+
+
+
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
