@@ -3,7 +3,7 @@ import { getFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { getFunctions } from 'firebase/functions';
 
-const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: "AIzaSyCfqqCSy_NHMbBQ-OQfFS7xwFkHh8QKqM4",
   authDomain: "vrar-a6aa2.firebaseapp.com",
   projectId: "vrar-a6aa2",
